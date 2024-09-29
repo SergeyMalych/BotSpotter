@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bot Detection Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #message {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        #detectionMethods {
+            list-style-type: none;
+            padding: 0;
+        }
+        #detectionMethods li {
+            margin-bottom: 5px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        .detected {
+            background-color: #ffcccc;
+        }
+        .not-detected {
+            background-color: #ccffcc;
+        }
+    </style>
+</head>
+<body>
+    <div id="message"></div>
+    <div><ul id="detectionMethods"></ul></div>
+
+    <script>
+        function detectBot() {
+            let botScore = 0;
+            const detectionMethods = [];
+            const threshold = 0.2; // Lowered threshold to 20% for increased sensitivity
+
+            function addMethod(name, detected) {
+                detectionMethods.push({ name, detected });
+                if (detected) botScore++;
+            }
+
+            // Detected with PlayWright and Puppeteer
+            // Method 1: Check for WebDriver property (higher weight)
+            addMethod("WebDriver property", navigator.webdriver);
+            if (navigator.webdriver) botScore += 2; // Extra weight
+
+            // Detected with PlayWright
+            // Check for consistent window dimensions
+            addMethod("Consistent window dimensions", window.outerWidth === window.innerWidth && window.outerHeight === window.innerHeight);
+
+            // Check for consistent screen properties
+            addMethod("Inconsistent screen properties", screen.width === screen.availWidth && screen.height === screen.availHeight);
+
+            // Detected with PlayWright
+            // Check for plugins
+            addMethod("No plugins", navigator.plugins.length === 0);
+
+            // Detected with PlayWright
+            // Check for consistent viewport
+            addMethod("Consistent viewport", window.innerHeight === screen.height && window.innerWidth === screen.width);
+
+            // Detected with PlayWright
+            // Check for Web Share API
+            addMethod("Web Share API missing", !('share' in navigator));
+
+            // Check for touch support details
+            addMethod("Inconsistent touch support", ('ontouchstart' in window) !== ('TouchEvent' in window));
+
+            // Check for Web Bluetooth API
+            addMethod("Web Bluetooth API missing", !('bluetooth' in navigator));
+
+            // Check for user interaction
+            let userInteracted = false;
+            const interactionEvents = ['mousemove', 'click', 'keydown', 'scroll'];
+            interactionEvents.forEach(event => {
+                window.addEventListener(event, () => { userInteracted = true; }, { once: true });
+            });
+            setTimeout(() => {
+                addMethod("No user interaction", !userInteracted);
+            }, 1000);
+
+
+
+
+
+            // Calculate bot probability
+            setTimeout(() => {
+                const botProbability = botScore / detectionMethods.length;
+
+                // Display the appropriate message
+                const messageElement = document.getElementById('message');
+                if (botProbability >= threshold) {
+                    messageElement.textContent = 'Bot detected';
+                } else {
+                    messageElement.textContent = 'Welcome, human';
+                }
+
+                // Display detection methods
+                const methodsList = document.getElementById('detectionMethods');
+                detectionMethods.forEach(method => {
+                    const li = document.createElement('li');
+                    li.textContent = `${method.name}: ${method.detected ? 'Detected' : 'Not Detected'}`;
+                    li.className = method.detected ? 'detected' : 'not-detected';
+                    methodsList.appendChild(li);
+                });
+            }, 1000); // Delay to allow time for all checks to complete
+        }
+
+        // Run the detection when the page loads
+        window.addEventListener('load', detectBot);
+    </script>
+</body>
+</html>
