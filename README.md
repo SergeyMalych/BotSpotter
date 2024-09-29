@@ -1,7 +1,13 @@
+<p align="center">
+<img align="center" width="250" alt="logo" src="https://github.com/user-attachments/assets/dace0b5b-faee-46fe-a6bf-6e1ce624a804">
+</p>
+
 # BotSpotter
 
 BotSpotter is a project designed to detect automated browser interactions (bots) using various JavaScript techniques. This repository contains the bot detection JS script and instructions on how to test it using different automation tools.
 
+
+![screenshot](Screenshot1.png)
 ## Bot Detection Techniques and Browser Results
 
 | Technique | Explanation | Brave 1.70.119 | Safari 18.1 | Chrome 129.0.6668.71 | Edge 129.0.2792.65 | Firefox 130.0.1 | Puppeteer | Selenium | PlayWright |
