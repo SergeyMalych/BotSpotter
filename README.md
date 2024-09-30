@@ -58,66 +58,6 @@ This analysis underscores the complexity of bot detection and the need for a car
 2. add modern detections: https://github.com/rebrowser/rebrowser-bot-detector?tab=readme-ov-file#sourceurlleak
 3. add detections for other automation providers
 
-## Installation
-
-1. Clone the repository:
-   ```
-   git clone https://github.com/SergeyMalych/BotSpotter.git
-   cd BotSpotter
-   ```
-
-2. Ensure you have Python 3.7+ installed.
-   ```
-   brew install python3
-   ```
-
-3. Install the required Python packages:
-   ```
-   pip install pyppeteer pyselenium
-   ```
-   
-4. Make sure to also have chrome driver installed, this can be done using brew:
-   ```
-   brew install chromedriver
-   ```
-
-5. Install node.js
-   ```
-   brew install nodejs
-   ```
-6. Install Playwright and its browsers:
-   ```
-   npm init playwright@latest
-   ```
-
-## Usage
-
-1. Start a local server to host the bot detection page:
-   ```
-   python -m http.server 8000
-   ```
-
-2. Open a web browser and navigate to `http://localhost:8000/bot_detection_page.html` to see the bot detection in action.
-
-## Testing with Pyppeteer
-
-Pyppeteer is a Python port of Puppeteer, which allows you to control a headless Chrome browser using Python.
-
-Run the Pyppeteer test:
-   ```
-   python test_detection_puppeteer.py
-   ```
-
-## Testing with Playwright
-
-Playwright is a newer automation tool that supports multiple browser engines.
-
-Run the Playwright test:
-   ```
-   node test_detection_playwright.js
-   ```
-
-Both scripts will launch a browser, navigate to your bot detection page, and print the detection results.
 
 ## Contributing
 
